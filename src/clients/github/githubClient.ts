@@ -18,7 +18,7 @@ export class GithubClient {
     }): Promise<z.infer<typeof searchRepositoriesResponseSchema>> {
         assert(input.page === undefined || input.page > 0, new ValidationError("Invalid page"));
         assert(
-            input.per_page === undefined || input.per_page > 0,
+            input.per_page === undefined || input.per_page > 0 || input.per_page <= 100,
             new ValidationError("Invalid per_page"),
         );
 
