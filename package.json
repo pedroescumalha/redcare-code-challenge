@@ -1,0 +1,26 @@
+{
+  "name": "redcare-code-challenge",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Pedro Escumalha <pedro.simoes@tilta.io>",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^20.14.9",
+    "@typescript-eslint/eslint-plugin": "^7.15.0",
+    "@typescript-eslint/parser": "^7.15.0",
+    "eslint": "^9.6.0",
+    "eslint-plugin-jsdoc": "^48.5.0",
+    "globstar": "^1.0.0",
+    "nodemon": "^3.1.4",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.5.3"
+  },
+  "scripts": {
+    "start": "node dist/index.js",
+    "build": "tsc",
+    "dev": "nodemon --watch 'src/**' --ext 'ts,json' --ignore 'src/**/*.spec.ts' --ignore 'src/**/*.test.ts' --exec 'ts-node src/index.ts'",
+    "lint": "eslint ./src",
+    "lint:fix": "eslint ./src --fix",
+    "test": "globstar -- node --test --require ts-node/register ./src/**/*.test.ts"
+  }
+}
