@@ -4,11 +4,12 @@ import assert from "assert";
 import { HttpError, ValidationError } from "../../common";
 
 export class GithubClient {
-    private readonly apiEnpoint = "https://api.github.com";
-    private readonly apiToken: URL;
+    private readonly apiEnpoint = new URL("https://api.github.com");
+    private readonly apiToken: string;
 
     constructor(apiToken: string) {
-        this.apiToken = new URL(apiToken);
+        assert(apiToken, new ValidationError("Invalid api token"));
+        this.apiToken = apiToken;
     }
 
     public async searchPublicRepositories(input: {
