@@ -1,11 +1,10 @@
 {
     "extends": [
         "eslint:recommended",
-        "plugin:@typescript-eslint/recommended",
-        "plugin:jsdoc/recommended-typescript"
+        "plugin:@typescript-eslint/recommended"
     ],
     "parser": "@typescript-eslint/parser",
-    "plugins": ["@typescript-eslint", "jsdoc"],
+    "plugins": ["@typescript-eslint"],
     "root": true,
     "rules": {
         "semi": "error",
@@ -18,8 +17,6 @@
         "curly": ["error", "all"],
         "@typescript-eslint/explicit-function-return-type": "error",
         "@typescript-eslint/array-type": "error",
-        "jsdoc/require-description": "warn",
-        "jsdoc/no-types": "warn",
         "@typescript-eslint/consistent-type-imports": "error",
         "max-len": ["error", { "code": 100, "ignoreComments": true }],
         "max-depth": ["error", 3],
