@@ -1,1 +1,4 @@
-console.log("hello world");
+import { buildServer } from "./api";
+
+const server = buildServer();
+server.start();

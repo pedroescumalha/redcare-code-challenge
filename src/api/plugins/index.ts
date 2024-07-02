@@ -1,0 +1,1 @@
+export { fastifyZodSchemaPlugin } from "./zodValidationPlugin";
