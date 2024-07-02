@@ -17,11 +17,16 @@ export class GithubClient {
         page?: number;
         per_page?: number;
     }): Promise<z.infer<typeof searchRepositoriesResponseSchema>> {
-        assert(input.page === undefined || input.page > 0, new ValidationError("Invalid page"));
-        assert(
-            input.per_page === undefined || input.per_page > 0 || input.per_page <= 100,
-            new ValidationError("Invalid per_page"),
-        );
+        if (input.page !== undefined) {
+            assert(input.page > 0, new ValidationError("Invalid page"));
+        }
+
+        if (input.per_page !== undefined) {
+            assert(
+                input.per_page > 0 && input.per_page <= 100,
+                new ValidationError("Invalid per_page"),
+            );
+        }
 
         const url = new URL("/search/repositories", this.apiEnpoint);
 
