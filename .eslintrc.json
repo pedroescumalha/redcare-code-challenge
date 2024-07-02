@@ -1,0 +1,42 @@
+{
+    "extends": [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:jsdoc/recommended-typescript"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "plugins": ["@typescript-eslint", "jsdoc"],
+    "root": true,
+    "rules": {
+        "semi": "error",
+        "comma-spacing": "error",
+        "comma-dangle": ["error", "always-multiline"],
+        "semi-spacing": "error",
+        "quotes": ["error", "double"],
+        "no-unreachable": "error",
+        "indent": ["error", 4],
+        "curly": ["error", "all"],
+        "@typescript-eslint/explicit-function-return-type": "error",
+        "@typescript-eslint/array-type": "error",
+        "jsdoc/require-description": "warn",
+        "jsdoc/no-types": "warn",
+        "@typescript-eslint/consistent-type-imports": "error",
+        "max-len": ["error", { "code": 100, "ignoreComments": true }],
+        "max-depth": ["error", 3],
+        "no-duplicate-imports": ["error", { "includeExports": true }],
+        "@typescript-eslint/member-delimiter-style": ["error", {
+            "multiline": {
+                "delimiter": "semi",
+                "requireLast": true
+            },
+            "singleline": {
+                "delimiter": "comma",
+                "requireLast": false
+            }
+        }],
+        "function-paren-newline": ["error", "consistent"],
+        "require-await": "error",
+        "brace-style": "off",
+        "@typescript-eslint/brace-style": "error"
+    }
+}
