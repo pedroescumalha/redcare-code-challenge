@@ -1,13 +1,7 @@
-import type { FastifyInstance } from "fastify";
-
-export function testRoute(server: FastifyInstance): Promise<void> {
-    server.get("/ping", (_, reply) => {
-        reply.code(200).send({ status: "pong" });
-    });
-
-    return Promise.resolve();
-}
+import { getRepositoriesScoreRoute } from "./repositories/getRepositoriesScoreRoute";
+import { healthCheckRoute } from "./health/healthCheckRoute";
 
 export const routes = [
-    testRoute,
+    getRepositoriesScoreRoute,
+    healthCheckRoute,
 ];
