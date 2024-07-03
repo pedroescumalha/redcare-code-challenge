@@ -1,12 +1,11 @@
-import { beforeEach, describe, it, mock } from "node:test";
+import { describe, it, mock } from "node:test";
 import { GithubClient } from "../github/githubClient";
 import assert from "node:assert";
 import { HttpError, ValidationError } from "../../common";
+import { setupTest } from "./setup";
 
 describe(GithubClient.name, () => {
-    beforeEach(() => {
-        mock.reset();
-    });
+    setupTest();
 
     it("throws if api key is invalid", () => {
         assert.throws(() => new GithubClient(""), ValidationError);

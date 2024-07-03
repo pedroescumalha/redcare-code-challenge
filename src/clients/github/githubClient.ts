@@ -2,6 +2,7 @@ import type z from "zod";
 import { searchRepositoriesResponseSchema } from "./schemas";
 import assert from "assert";
 import { HttpError, ValidationError } from "../../common";
+import { request } from "../baseHttpClient";
 
 export class GithubClient {
     private readonly apiEnpoint = new URL("https://api.github.com");
@@ -34,7 +35,7 @@ export class GithubClient {
         url.searchParams.set("page", (input.page ?? 1).toString());
         url.searchParams.set("q", input.query.join(" "));
 
-        const res = await fetch(url, {
+        const res = await request(url, {
             method: "GET",
             headers: {
                 "Accept": "application/vnd.github+json",
