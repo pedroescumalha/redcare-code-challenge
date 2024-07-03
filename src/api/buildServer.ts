@@ -22,11 +22,9 @@ export function buildServer(
         configureServer(serverOptions);
     }
 
-    const logger = serverOptions.logger();
-    // hack to bridge our logger with fastify's logger
-    (logger as typeof logger & { child: () => typeof logger }).child = (): typeof logger => logger;
-
-    const server = fastify({ logger });
+    const server = fastify({
+        logger: serverOptions.logger(),
+    });
 
     server.register(fastifyZodSchemaPlugin);
 
