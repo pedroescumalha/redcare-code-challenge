@@ -13,7 +13,7 @@ export function getRepositoriesScoreRoute(server: FastifyInstance): Promise<void
         Reply: ScoreRepositoriesRouteResponse;
     }>(endpointsV1.getRepositoriesScore, async (_, reply) => {
         const res = await repositoriesService.getRepositoriesScore({
-            createdAt: new Date("2024-07-02"),
+            createdAt: new Date("1970-07-02"),
             language: "javascript",
         });
 

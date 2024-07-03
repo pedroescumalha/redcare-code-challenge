@@ -34,6 +34,7 @@ export async function getRepositoriesScore(input: ScoreRepositoriesInput)
             score: calculatePopularityScore({
                 forks: r.forks_count,
                 stars: r.stargazers_count,
+                updatedAt: new Date(r.updated_at),
                 maxForks,
                 maxStars,
             }),
@@ -52,8 +53,6 @@ async function getRepos(client: GithubClient, input: ScoreRepositoriesInput)
         per_page: input.take,
         page: input.page,
         query: [ `created:>=${input.createdAt.toISOString()}`, `language:${input.language}` ],
-        sort: "stars",
-        order: "desc",
     });
 
     logger.getLogger().info(`${repos.total_count} repositories found.
@@ -92,14 +91,22 @@ async function getMaxForks(client: GithubClient): Promise<number> {
     return maxForks;
 }
 
+// written with the help of chatGPT
 function calculatePopularityScore(input: {
     stars: number;
     forks: number;
+    updatedAt: Date;
     maxStars: number;
     maxForks: number;
 }): number {
-    const starsScore = input.stars / input.maxStars;
-    const forksScore = input.forks / input.maxForks;
+    const currentDate = new Date();
+    const oneYearAgo = currentDate.setFullYear(currentDate.getFullYear() - 1);
 
-    return utils.round((starsScore * 0.5) + (forksScore * 0.5));
+    const starsScore = Math.min(input.stars / input.maxStars, 1); // ratio between max stars and repo star value
+    const forksScore = Math.min(input.forks / input.maxForks, 1); // ratio between max forks and repo forks value
+    const recencyScore =
+        (input.updatedAt.getTime() - oneYearAgo <= 0 ? 0 : input.updatedAt.getTime() - oneYearAgo) / // interval between updatedAt and one year ago
+        (Date.now() - oneYearAgo); // one year interval
+ 
+    return utils.round((starsScore * 0.5) + (forksScore * 0.3) + (recencyScore * 0.2));
 }
