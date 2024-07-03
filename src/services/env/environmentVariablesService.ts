@@ -5,6 +5,8 @@ import dotenv from "dotenv";
 
 const schema = z.object({
     GITHUB_API_TOKEN: z.string(),
+    API_URL: z.string(),
+    API_PORT: z.coerce.number(),
 });
 
 type Environment = z.infer<typeof schema>;
