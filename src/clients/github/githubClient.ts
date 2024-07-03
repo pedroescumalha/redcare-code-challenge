@@ -15,6 +15,8 @@ export class GithubClient {
 
     public async searchPublicRepositories(input: {
         query: `${"created:>=" | "language:"}${string}`[];
+        sort?: "stars" | "fork";
+        order?: "desc" | "asc";
         page?: number;
         per_page?: number;
     }): Promise<z.infer<typeof searchRepositoriesResponseSchema>> {
@@ -31,9 +33,11 @@ export class GithubClient {
 
         const url = new URL("/search/repositories", this.apiEnpoint);
 
-        url.searchParams.set("per_page", (input.per_page ?? 30).toString());
-        url.searchParams.set("page", (input.page ?? 1).toString());
-        url.searchParams.set("q", input.query.join(" "));
+        addQueryParam(url.searchParams, "per_page", (input.per_page ?? 30).toString());
+        addQueryParam(url.searchParams, "page", (input.page ?? 1).toString());
+        addQueryParam(url.searchParams, "sort", input.sort);
+        addQueryParam(url.searchParams, "order", input.order);
+        addQueryParam(url.searchParams, "q", buildQuery(input.query));
 
         const res = await request(url, {
             method: "GET",
@@ -53,4 +57,18 @@ export class GithubClient {
 
         return result.data;
     }
+}
+
+function addQueryParam(
+    searchParams: URLSearchParams,
+    key: string,
+    value: string | undefined,
+): void {
+    if (value !== undefined) {
+        searchParams.set(key, value);
+    }
+}
+
+function buildQuery(query: string[]): string {
+    return `is:public ${query.join(" ")}`;
 }
