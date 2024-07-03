@@ -12,5 +12,6 @@ export const fastifyZodSchemaPlugin = fp((fastify, _, done) => {
         };
     });
 
+    fastify.log.info("Zod plugin registered.");
     done();
 });

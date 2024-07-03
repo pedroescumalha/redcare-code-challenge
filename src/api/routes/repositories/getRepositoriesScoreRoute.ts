@@ -14,5 +14,7 @@ export function getRepositoriesScoreRoute(server: FastifyInstance): Promise<void
         reply.code(200).send({ status: "pong" });
     });
 
-    return Promise.resolve();
+    return Promise.resolve(
+        server.log.info("get repositories score route registered."),
+    );
 }

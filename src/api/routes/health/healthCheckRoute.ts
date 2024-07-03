@@ -13,5 +13,7 @@ export function healthCheckRoute(server: FastifyInstance): Promise<void> {
         reply.code(200).send({ status: "healthy" });
     });
 
-    return Promise.resolve();
+    return Promise.resolve(
+        server.log.info("health check route registered."),
+    );
 }
