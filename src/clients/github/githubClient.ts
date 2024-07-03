@@ -4,6 +4,20 @@ import assert from "assert";
 import { HttpError, ValidationError } from "../../common";
 import { request } from "../baseHttpClient";
 
+const QueryParams = {
+    PER_PAGE: "per_page",
+    PAGE: "page",
+    SORT: "sort",
+    ORDER: "order",
+    QUERY: "q",
+};
+
+
+type PossibleParams = ">=" | "<=" | ">" | "<";
+type CreatedAtSearchQuery = `created:${PossibleParams}${string}`;
+type LanguageSearchQuery = `language:${string}`;
+type SearchQuery = (CreatedAtSearchQuery | LanguageSearchQuery)[];
+
 export class GithubClient {
     private readonly apiEnpoint = new URL("https://api.github.com");
     private readonly apiToken: string;
@@ -14,7 +28,7 @@ export class GithubClient {
     }
 
     public async searchPublicRepositories(input: {
-        query: `${"created:>=" | "language:"}${string}`[];
+        query: SearchQuery;
         sort?: "stars" | "fork";
         order?: "desc" | "asc";
         page?: number;
@@ -33,11 +47,11 @@ export class GithubClient {
 
         const url = new URL("/search/repositories", this.apiEnpoint);
 
-        addQueryParam(url.searchParams, "per_page", (input.per_page ?? 30).toString());
-        addQueryParam(url.searchParams, "page", (input.page ?? 1).toString());
-        addQueryParam(url.searchParams, "sort", input.sort);
-        addQueryParam(url.searchParams, "order", input.order);
-        addQueryParam(url.searchParams, "q", buildQuery(input.query));
+        addQueryParam(url.searchParams, QueryParams.PER_PAGE, (input.per_page ?? 30).toString());
+        addQueryParam(url.searchParams, QueryParams.PAGE, (input.page ?? 1).toString());
+        addQueryParam(url.searchParams, QueryParams.SORT, input.sort);
+        addQueryParam(url.searchParams, QueryParams.ORDER, input.order);
+        addQueryParam(url.searchParams, QueryParams.QUERY, buildQuery(input.query));
 
         const res = await request(url, {
             method: "GET",
