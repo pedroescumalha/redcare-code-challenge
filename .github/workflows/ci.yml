@@ -17,13 +17,13 @@ jobs:
         node-version: '20.x'
 
     - name: Install project dependencies
-      run: yarn
+      run: npm install
 
     - name: Build app
-      run: yarn build
+      run: npm run build
 
     - name: Run linter
-      run: yarn lint
+      run: npm run lint
 
     - name: Run tests
-      run: yarn test
+      run: npm run test
