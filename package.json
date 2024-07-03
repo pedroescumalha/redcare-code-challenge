@@ -20,7 +20,8 @@
     "dev": "nodemon --watch 'src/**' --ext 'ts,json' --ignore 'src/**/*.spec.ts' --ignore 'src/**/*.test.ts' --exec 'ts-node src/index.ts'",
     "lint": "eslint ./src",
     "lint:fix": "eslint ./src --fix",
-    "test": "globstar -- node --test --require ts-node/register ./src/**/*.test.ts"
+    "test": "globstar -- node --test --require ts-node/register ./src/**/*.test.ts",
+    "setup:env": "node -e \"fs.copyFileSync('.env.example', '.env')\""
   },
   "dependencies": {
     "dotenv": "^16.4.5",

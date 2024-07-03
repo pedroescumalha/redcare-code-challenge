@@ -4,8 +4,8 @@ import assert from "assert";
 import dotenv from "dotenv";
 
 const schema = z.object({
-    GITHUB_API_TOKEN: z.string(),
-    API_URL: z.string(),
+    GITHUB_API_TOKEN: z.string().min(1),
+    API_URL: z.string().min(1),
     API_PORT: z.coerce.number(),
     LOG_LEVEL: z.union([
         z.literal("debug"),
@@ -28,7 +28,10 @@ export function loadEnv(): void {
     dotenv.config();
 
     const parse = schema.safeParse(process.env);
-    assert(parse.success, new ValidationError("Error parsing environment variables."));
+    assert(
+        parse.success,
+        new ValidationError(`Error parsing environment variables: ${parse.error?.toString()}`),
+    );
 
     environment = parse.data;
 }
