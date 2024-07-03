@@ -9,11 +9,13 @@ export type ScoreRepositoriesResponse = {
     url: string;
     createdAt: Date;
     language: string;
+    starsCount: number;
+    forksCount: number;
 };
 
 type ScoreRepositoriesInput = {
-    createdAt: Date;
-    language: string;
+    createdAt?: Date;
+    language?: string;
     take?: number;
     page?: number;
 }
@@ -43,21 +45,25 @@ export async function getRepositoriesScore(input: ScoreRepositoriesInput)
             name: r.name,
             createdAt: new Date(r.created_at),
             language: r.language ?? "",
+            starsCount: r.stargazers_count,
+            forksCount: r.forks_count,
         };
     });
 }
 
 async function getRepos(client: GithubClient, input: ScoreRepositoriesInput)
 : Promise<ReturnType<typeof client.searchPublicRepositories>> {
+    const createdAt = (input.createdAt ?? new Date("1970-01-01")).toISOString();
+
     const repos = await client.searchPublicRepositories({
         per_page: input.take,
         page: input.page,
-        query: [ `created:>=${input.createdAt.toISOString()}`, `language:${input.language}` ],
+        query: [ `created:>=${createdAt}`, `language:${input.language}` ],
     });
 
     logger.getLogger().info(`${repos.total_count} repositories found.
         - Language: ${input.language};
-        - createdAt: ${input.createdAt.toISOString()}`);
+        - createdAt: ${createdAt}`);
 
     return repos;
 }
