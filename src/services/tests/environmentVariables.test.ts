@@ -14,6 +14,7 @@ describe(loadEnv.name, () => {
             GITHUB_API_TOKEN: "token",
             API_URL: "localhost",
             API_PORT: "invalid_port",
+            LOG_LEVEL: "info",
         };
 
         mock.method(dotenv, "config", () => {
@@ -32,6 +33,7 @@ describe(loadEnv.name, () => {
             GITHUB_API_TOKEN: "token",
             API_URL: "localhost",
             API_PORT: "8080",
+            LOG_LEVEL: "info",
         };
 
         const dotEnvMock = mock.method(dotenv, "config", () => {

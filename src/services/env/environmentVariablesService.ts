@@ -7,6 +7,13 @@ const schema = z.object({
     GITHUB_API_TOKEN: z.string(),
     API_URL: z.string(),
     API_PORT: z.coerce.number(),
+    LOG_LEVEL: z.union([
+        z.literal("debug"),
+        z.literal("info"),
+        z.literal("warn"),
+        z.literal("error"),
+        z.literal("silent"),
+    ]),
 });
 
 type Environment = z.infer<typeof schema>;
