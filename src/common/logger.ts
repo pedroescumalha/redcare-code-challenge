@@ -1,5 +1,6 @@
 import pino from "pino";
-import { ValidationError, type LogLevel } from "../../common";
+import type { LogLevel } from "./types";
+import { ValidationError } from "./errors";
 
 type LoggerOptions = {
     level: LogLevel;

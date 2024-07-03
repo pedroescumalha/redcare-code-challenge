@@ -1,7 +1,7 @@
 import fastify from "fastify";
 import { routes } from "./routes";
 import { fastifyZodSchemaPlugin } from "./plugins";
-import { loggerService } from "../services";
+import { logger } from "../common";
 
 type Server = {
     port: number;
@@ -12,7 +12,7 @@ type Server = {
 const serverOptions = {
     port: 8080,
     host: "localhost",
-    logger: loggerService.getLogger,
+    logger: logger.getLogger,
 };
 
 export function buildServer(
