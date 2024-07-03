@@ -1,7 +1,10 @@
 import { buildServer } from "./api";
-import { environmentVariablesService } from "./services";
+import { environmentVariablesService, loggerService } from "./services";
 
 environmentVariablesService.loadEnv();
+loggerService.createLogger({
+    level: environmentVariablesService.getEnv("LOG_LEVEL"),
+});
 
 const server = buildServer((options) => {
     options.host = environmentVariablesService.getEnv("API_URL");
