@@ -34,11 +34,12 @@ describe(loadEnv.name, () => {
             API_PORT: "8080",
         };
 
-        mock.method(dotenv, "config", () => {
+        const dotEnvMock = mock.method(dotenv, "config", () => {
             dotenv.populate(process.env as Record<string, string>, env);
         });
 
         assert.doesNotThrow(() => loadEnv());
+        assert.equal(dotEnvMock.mock.callCount(), 1);
 
         Object.keys(env).forEach((e) => {
             delete process.env[e];

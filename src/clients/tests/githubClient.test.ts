@@ -1,9 +1,13 @@
-import { describe, it } from "node:test";
+import { beforeEach, describe, it, mock } from "node:test";
 import { GithubClient } from "../github/githubClient";
 import assert from "node:assert";
-import { ValidationError } from "../../common";
+import { HttpError, ValidationError } from "../../common";
 
 describe(GithubClient.name, () => {
+    beforeEach(() => {
+        mock.reset();
+    });
+
     it("throws if api key is invalid", () => {
         assert.throws(() => new GithubClient(""), ValidationError);
     });
@@ -33,5 +37,48 @@ describe(GithubClient.name, () => {
             query: [],
             per_page: 101,
         }), ValidationError);
+    });
+
+    it("throws if response code is not 200", async () => {
+        const client = new GithubClient("token");
+        mock.method(global, "fetch", () => {
+            return {
+                ok: false,
+            };
+        });
+
+        await assert.rejects(() => client.searchPublicRepositories({ query: [] }), HttpError);
+    });
+
+    it("throws if response doesnt fulfill schema", async () => {
+        const client = new GithubClient("token");
+        mock.method(global, "fetch", () => {
+            return {
+                ok: true,
+                json: (): Promise<unknown> => {
+                    return Promise.resolve({ "dummy": true });
+                },
+            };
+        });
+
+        await assert.rejects(() => client.searchPublicRepositories({ query: [] }), ValidationError);
+    });
+
+    it("fetches correctly", async () => {
+        const client = new GithubClient("token");
+        mock.method(global, "fetch", () => {
+            return {
+                ok: true,
+                json: (): Promise<unknown> => {
+                    return Promise.resolve({
+                        total_count: 0,
+                        incomplete_results: false,
+                        items: [],
+                    });
+                },
+            };
+        });
+
+        await assert.doesNotReject(() => client.searchPublicRepositories({ query: [] }));
     });
 });
