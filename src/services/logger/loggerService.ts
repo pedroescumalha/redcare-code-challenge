@@ -6,14 +6,19 @@ type LoggerOptions = {
 }
 
 class Logger {
-    private readonly options: LoggerOptions;
     private readonly pino: ReturnType<typeof pino>;
 
     constructor(options: LoggerOptions) {
-        this.options = options;
+        this.level = options.level;
         this.pino = pino({
             level: options.level,
         });
+    }
+
+    public readonly level: LogLevel;
+
+    public trace(log: string): void {
+        this.pino.trace(log);
     }
 
     public debug(log: string): void {
@@ -30,6 +35,10 @@ class Logger {
 
     public error(log: string | Error): void {
         this.pino.error(log);
+    }
+
+    public fatal(log: string): void {
+        this.pino.fatal(log);
     }
 }
 
