@@ -12,7 +12,6 @@ const QueryParams = {
     QUERY: "q",
 };
 
-
 type PossibleParams = ">=" | "<=" | ">" | "<";
 type CreatedAtSearchQuery = `created:${PossibleParams}${string}`;
 type LanguageSearchQuery = `language:${string}`;

@@ -117,6 +117,3 @@ export const searchRepositoriesResponseSchema = z.object({
     incomplete_results: z.boolean(),
     items: z.array(repositorySchema),
 });
-
-export type GithubRepository = z.infer<typeof repositorySchema>;
-

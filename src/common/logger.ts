@@ -1,6 +1,7 @@
 import pino, { type Logger } from "pino";
-import type { LogLevel } from "./types";
 import { ValidationError } from "./errors";
+
+type LogLevel = "trace" | "debug" | "info" | "warn" | "error" | "fatal" | "silent";
 
 type LoggerOptions = {
     level: LogLevel;
