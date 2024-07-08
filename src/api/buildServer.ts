@@ -1,6 +1,6 @@
 import fastify from "fastify";
 import { routes } from "./routes";
-import { fastifyZodSchemaPlugin } from "./plugins";
+import { errorHandler, fastifyZodSchemaPlugin } from "./plugins";
 import { logger } from "../common";
 
 type Server = {
@@ -25,6 +25,8 @@ export function buildServer(
     const server = fastify({
         logger: serverOptions.logger(),
     });
+
+    server.setErrorHandler(errorHandler);
 
     server.register(fastifyZodSchemaPlugin);
 
