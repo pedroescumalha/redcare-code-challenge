@@ -6,7 +6,7 @@ import z from "zod";
 const queryParamsSchema = z.object({
     createdAt: z.string().date().optional(),
     language: z.string().optional(),
-    take: z.coerce.number().optional(),
+    take: z.coerce.number().max(100).optional(),
     page: z.coerce.number().optional(),
 });
 
