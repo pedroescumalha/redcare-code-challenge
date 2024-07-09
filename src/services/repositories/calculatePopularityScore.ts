@@ -1,8 +1,8 @@
 import { utils } from "../../common";
 
-export const STARS_SCORE_MULTIPLIER = 0.5;
-export const FORKS_SCORE_MULTIPLIER = 0.3;
-export const RECENCY_SCORE_MULTIPLIER = 0.2;
+const STARS_SCORE_MULTIPLIER = 0.5;
+const FORKS_SCORE_MULTIPLIER = 0.3;
+const RECENCY_SCORE_MULTIPLIER = 0.2;
 
 // written with the help of chatGPT
 export function calculatePopularityScore(input: {
