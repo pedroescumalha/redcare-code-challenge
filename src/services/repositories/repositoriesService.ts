@@ -1,6 +1,7 @@
 import { GithubClient } from "../../clients";
-import { logger, utils } from "../../common";
+import { logger } from "../../common";
 import { getEnv } from "../env/environmentVariablesService";
+import { calculatePopularityScore } from "./calculatePopularityScore";
 
 export type ScoreRepositoriesResponse = {
     score: number;
@@ -95,24 +96,4 @@ async function getMaxForks(client: GithubClient): Promise<number> {
     logger.getLogger().info(`Max forks found: ${maxForks}`);
 
     return maxForks;
-}
-
-// written with the help of chatGPT
-function calculatePopularityScore(input: {
-    stars: number;
-    forks: number;
-    updatedAt: Date;
-    maxStars: number;
-    maxForks: number;
-}): number {
-    const currentDate = new Date();
-    const oneYearAgo = currentDate.setFullYear(currentDate.getFullYear() - 1);
-
-    const starsScore = Math.min(input.stars / input.maxStars, 1); // ratio between max stars and repo star value
-    const forksScore = Math.min(input.forks / input.maxForks, 1); // ratio between max forks and repo forks value
-    const recencyScore =
-        (input.updatedAt.getTime() - oneYearAgo <= 0 ? 0 : input.updatedAt.getTime() - oneYearAgo) / // interval between updatedAt and one year ago
-        (Date.now() - oneYearAgo); // one year interval
- 
-    return utils.round((starsScore * 0.5) + (forksScore * 0.3) + (recencyScore * 0.2));
 }

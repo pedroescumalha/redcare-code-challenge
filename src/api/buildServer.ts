@@ -9,7 +9,7 @@ type SendRequest = (input: {
     headers?: Record<string, string>;
     body?: Record<string, unknown>;
     query?: Record<string, string>;
-}) => Promise<{ status: number, body: any }>;
+}) => Promise<{ status: number, body: unknown }>;
 
 export type Server = {
     port: number;
@@ -72,7 +72,7 @@ export function buildServer(
                     headers?: Record<string, string>;
                     body?: Record<string, unknown>;
                     query?: Record<string, string>;
-                }) => {
+                }): Promise<{ status: number, body: unknown }> => {
                     const response = await server.inject({
                         method: input.method,
                         url: input.path,

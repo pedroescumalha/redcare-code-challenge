@@ -23,7 +23,7 @@ export function setupTest(): { getTestingServer: () => TestingServer } {
     });
 
     return {
-        getTestingServer: () => {
+        getTestingServer: (): TestingServer => {
             if (!server || !testingServer) {
                 throw new Error("Server not initialized");
             }
