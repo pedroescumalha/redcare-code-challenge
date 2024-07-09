@@ -5,6 +5,7 @@
   "author": "Pedro Escumalha <pedro.simoes@tilta.io>",
   "license": "MIT",
   "devDependencies": {
+    "@anatine/zod-mock": "^3.13.4",
     "@types/node": "^20.14.9",
     "@typescript-eslint/eslint-plugin": "^7.15.0",
     "@typescript-eslint/parser": "^7.15.0",
