@@ -9,7 +9,7 @@ type SendRequest = (input: {
     headers?: Record<string, string>;
     body?: Record<string, unknown>;
     query?: Record<string, string>;
-}) => Promise<{ status: number, body: unknown }>;
+}) => Promise<{ status: number, body: any }>;
 
 export type Server = {
     port: number;

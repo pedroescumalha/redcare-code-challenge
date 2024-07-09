@@ -1,12 +1,10 @@
 import { after, before, beforeEach, mock } from "node:test";
-import { buildServer, Server } from "../buildServer";
+import { buildServer, type Server } from "../buildServer";
 import { logger } from "../../common";
 
 type TestingServer = Awaited<ReturnType<Server["test"]>>;
 
-export function setupTest(): {
-    getTestingServer: () => TestingServer;
-} {
+export function setupTest(): { getTestingServer: () => TestingServer } {
     logger.createLogger({ level: "silent" });
     let server: Server | undefined;
     let testingServer: TestingServer | undefined;
@@ -31,6 +29,6 @@ export function setupTest(): {
             }
 
             return testingServer;
-        }
-    }
+        },
+    };
 }
