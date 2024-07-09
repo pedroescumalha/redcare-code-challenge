@@ -8,7 +8,7 @@ describe("calculatePopularityScore", () => {
         fiveYearsAgo.setFullYear(fiveYearsAgo.getFullYear() - 5);
 
         return fiveYearsAgo;
-    }
+    };
 
     it("doesnt take into account repos that havent been updated for more than 1 year", () => {
         const score = calculatePopularityScore({
