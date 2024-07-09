@@ -9,7 +9,7 @@ type SendRequest = (input: {
     headers?: Record<string, string>;
     body?: Record<string, unknown>;
     query?: Record<string, string>;
-}) => Promise<{ status: number; body: unknown }>;
+}) => Promise<{ status: number, body: unknown }>;
 
 export type Server = {
     port: number;
@@ -84,8 +84,8 @@ export function buildServer(
                     return {
                         status: response.statusCode,
                         body: response.json(),
-                    }
-                }
+                    };
+                },
             };
         },
         stop: async (): Promise<void> => {
